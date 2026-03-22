@@ -27,16 +27,12 @@ export async function GET(request: Request) {
       }
     )
     const { data: { session }, error } = await supabase.auth.exchangeCodeForSession(code)
-    if (!error && session?.user) {
-      // Ensure profile exists
-      await supabase.from('profiles').upsert({
-        id: session.user.id,
-        email: session.user.email,
-        full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name,
-        role: session.user.email === 'admin@rkfitness.com' ? 'ADMIN' : 'MEMBER',
-      }, { onConflict: 'id' });
+    
+    // We remove the manual profiling here because we have a Database Trigger 
+    // that handles this automatically upon user creation in auth.users.
+    // This makes the transition to the dashboard significantly faster.
 
-      // For Google login to work correctly on the first redirect:
+    if (!error && session?.user) {
       const response = NextResponse.redirect(`${origin}${next}`)
       return response
     }

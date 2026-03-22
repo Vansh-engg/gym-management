@@ -32,10 +32,17 @@ export function Navbar() {
     getProfile();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
-        setProfile(data);
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      
+      if (currentUser) {
+        // Fetch profile asynchronously without blocking the user state
+        const { data } = await supabase.from('profiles')
+          .select('*')
+          .eq('id', currentUser.id)
+          .maybeSingle();
+          
+        if (data) setProfile(data);
       } else {
         setProfile(null);
       }
