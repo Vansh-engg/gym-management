@@ -89,16 +89,8 @@ export function Navbar() {
         
         <DropdownMenu>
           <DropdownMenuTrigger render={
-            <Button variant="ghost" size="icon" className="rounded-full border-2 border-primary/20 p-0 overflow-hidden hover:border-primary/50 transition-all h-10 w-10">
-              {user?.user_metadata?.avatar_url ? (
-                <img 
-                  src={user.user_metadata.avatar_url} 
-                  alt="Profile" 
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <UserCircle className="h-6 w-6 text-primary" />
-              )}
+            <Button variant="ghost" size="icon" className="rounded-full border-2 border-primary/20 p-0 overflow-hidden hover:border-primary/50 transition-all h-10 w-10 flex items-center justify-center">
+              <UserCircle className="h-6 w-6 text-primary" />
             </Button>
           }>
               <span className="sr-only">Toggle user menu</span>
