@@ -17,15 +17,28 @@ import {
 
 export function Navbar() {
   const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
   const router = useRouter();
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
+    async function getProfile() {
+      const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
-    });
+      if (user) {
+        const { data } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle();
+        setProfile(data);
+      }
+    }
+    getProfile();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        const { data } = await supabase.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+        setProfile(data);
+      } else {
+        setProfile(null);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -79,9 +92,16 @@ export function Navbar() {
           <DropdownMenuContent align="end" className="w-64 border-border bg-card shadow-2xl rounded-2xl p-2">
             <DropdownMenuLabel className="p-4">
               <div className="flex flex-col space-y-2">
-                <p className="text-sm font-black uppercase tracking-tighter text-foreground italic">
-                  {user?.user_metadata?.full_name || "New Athlete"}
-                </p>
+                <div className="flex items-center justify-between gap-2">
+                   <p className="text-sm font-black uppercase tracking-tighter text-foreground italic">
+                     {profile?.full_name || user?.user_metadata?.full_name || "New Athlete"}
+                   </p>
+                   {profile?.role && (
+                     <div className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[8px] font-black uppercase tracking-[0.2em] border border-primary/20 shrink-0">
+                       {profile.role}
+                     </div>
+                   )}
+                </div>
                 <p className="text-[10px] font-bold text-muted-foreground truncate opacity-70">
                   {user?.email}
                 </p>
