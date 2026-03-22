@@ -3,16 +3,18 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, Users, Dumbbell, CreditCard, Settings } from 'lucide-react';
+import { LayoutDashboard, Users, Dumbbell, CreditCard, Settings, LogOut } from 'lucide-react';
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
 
 interface MobileNavProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function MobileNav({ className, ...props }: MobileNavProps) {
   const pathname = usePathname();
   const [isAdmin, setIsAdmin] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     async function checkRole() {
@@ -26,6 +28,11 @@ export function MobileNav({ className, ...props }: MobileNavProps) {
     checkRole();
   }, []);
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.push('/login');
+  };
+
   const allLinks = [
     { name: 'Home', href: '/dashboard', icon: LayoutDashboard, adminOnly: false },
     { name: 'Members', href: '/dashboard/members', icon: Users, adminOnly: true },
@@ -37,7 +44,7 @@ export function MobileNav({ className, ...props }: MobileNavProps) {
   const links = allLinks.filter(link => !link.adminOnly || isAdmin);
 
   return (
-    <nav className={cn("fixed bottom-0 left-0 right-0 z-50 flex h-20 bg-card border-t border-border shadow-[0_-2px_10px_rgba(0,0,0,0.5)] justify-around items-center px-2 pb-safe", className)} {...props}>
+    <nav className={cn("fixed bottom-0 left-0 right-0 z-50 flex h-20 bg-card border-t border-border shadow-[0_-2px_10px_rgba(0,0,0,0.5)] justify-around items-center px-1 pb-safe", className)} {...props}>
       {links.map((link) => {
         const isActive = pathname === link.href || pathname?.startsWith(link.href + '/');
         return (
@@ -45,15 +52,23 @@ export function MobileNav({ className, ...props }: MobileNavProps) {
             key={link.name}
             href={link.href}
             className={cn(
-              "flex flex-col items-center justify-center p-2 text-xs font-medium transition-colors",
+              "flex flex-col items-center justify-center p-1 text-[10px] font-black uppercase tracking-tighter transition-colors",
               isActive ? "text-primary" : "text-muted-foreground"
             )}
           >
-            <link.icon className={cn("h-6 w-6 mb-1", isActive && "text-primary filter drop-shadow-[0_0_8px_rgba(197,99,12,0.8)]")} />
+            <link.icon className={cn("h-5 w-5 mb-1", isActive && "text-primary filter drop-shadow-[0_0_8px_rgba(197,99,12,0.8)]")} />
             {link.name}
           </Link>
         );
       })}
+      
+      <button
+        onClick={handleSignOut}
+        className="flex flex-col items-center justify-center p-1 text-[10px] font-black uppercase tracking-tighter text-muted-foreground hover:text-destructive transition-colors"
+      >
+        <LogOut className="h-5 w-5 mb-1" />
+        Log Out
+      </button>
     </nav>
   );
 }
