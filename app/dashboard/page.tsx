@@ -182,14 +182,14 @@ export default function DashboardPage() {
 
     return (
       <div className="space-y-10">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-4xl font-black tracking-tight text-foreground uppercase italic pb-1 border-b-4 border-primary w-fit">
-            Athlete Dashboard
-          </h1>
-          <p className="text-muted-foreground font-bold text-xl mt-2">
-            Welcome back, <span className="text-foreground">{member.name || profile.full_name}</span>.
-          </p>
-        </div>
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl md:text-4xl font-black tracking-tight text-foreground uppercase italic pb-1 border-b-4 border-primary w-fit">
+          Athlete Dashboard
+        </h1>
+        <p className="text-muted-foreground font-bold text-sm md:text-xl mt-2 leading-tight">
+          Welcome back, <span className="text-foreground">{member.name || profile.full_name}</span>.
+        </p>
+      </div>
 
         <div className="grid gap-8 md:grid-cols-2">
           <Card className="bg-card border-2 border-primary/20 relative overflow-hidden group">
@@ -199,10 +199,10 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle className="text-muted-foreground uppercase tracking-widest text-xs font-black">Plan Status</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="flex items-center justify-between">
-                <div className="text-5xl font-black text-primary italic uppercase">{member.plan}</div>
-                <Badge className="bg-primary/20 text-primary font-black px-4 h-8">{member.status}</Badge>
+            <CardContent className="space-y-4 p-5 md:p-6">
+              <div className="flex items-center justify-between gap-2">
+                <div className="text-3xl md:text-5xl font-black text-primary italic uppercase break-words">{member.plan}</div>
+                <Badge className="bg-primary/20 text-primary font-black px-2 md:px-4 h-7 md:h-8 text-[10px] md:text-xs shrink-0">{member.status}</Badge>
               </div>
               <div className="space-y-2 pt-4 border-t border-border/50">
                  <div className="flex items-center justify-between text-sm">
@@ -232,14 +232,14 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        <Card className="bg-card border-border border-2 rounded-[40px] p-10 text-center space-y-4">
-             <h3 className="text-2xl font-black uppercase italic tracking-tighter">Your Fitness Journey</h3>
-             <p className="text-muted-foreground font-medium max-w-xl mx-auto">
+        <Card className="bg-card border-border border-2 rounded-[30px] p-6 md:p-10 text-center space-y-4">
+             <h3 className="text-xl md:text-2xl font-black uppercase italic tracking-tighter">Your Fitness Journey</h3>
+             <p className="text-sm md:text-base text-muted-foreground font-medium max-w-xl mx-auto">
                 Track your progress, view your training history, and manage your membership. 
                 New features are arriving soon to help you push your limits.
              </p>
-             <div className="flex justify-center pt-4">
-                <Button className="bg-primary text-primary-foreground font-black px-10 h-14 rounded-2xl group">
+             <div className="flex justify-center pt-2">
+                <Button className="bg-primary text-primary-foreground font-black px-6 md:px-10 h-14 rounded-xl md:rounded-2xl group w-full md:w-auto">
                    View Training History <ArrowUpRight className="ml-2 h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </Button>
              </div>
@@ -251,12 +251,12 @@ export default function DashboardPage() {
   // Admin View
   return (
     <div className="space-y-8">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-black tracking-tight text-foreground uppercase italic pb-0.5 border-b-2 border-primary w-fit">
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl md:text-3xl font-black tracking-tight text-foreground uppercase italic pb-1 border-b-2 border-primary w-fit">
           Admin Overview
         </h1>
-        <p className="text-muted-foreground font-bold text-base mt-2 opacity-80">
-          Welcome back, <span className="text-foreground">Command Center</span>. Here's what's happening.
+        <p className="text-muted-foreground font-bold text-sm md:text-base mt-1 opacity-80">
+          Welcome back, <span className="text-foreground">Command Center</span>.
         </p>
       </div>
 
@@ -323,11 +323,11 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-8 grid-cols-1 lg:grid-cols-2">
-        <Card className="col-span-1 bg-card border-border border-2 rounded-[40px] overflow-hidden">
-          <CardHeader className="p-8 pb-4">
-            <CardTitle className="text-lg font-black uppercase tracking-tighter italic">Revenue Overview</CardTitle>
+        <Card className="col-span-1 bg-card border-border border-2 rounded-[30px] md:rounded-[40px] overflow-hidden">
+          <CardHeader className="p-5 md:p-8 pb-2">
+            <CardTitle className="text-base md:text-lg font-black uppercase tracking-tighter italic">Revenue Overview</CardTitle>
           </CardHeader>
-          <CardContent className="px-2 sm:p-6 h-[250px]">
+          <CardContent className="p-4 md:p-6 h-[250px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
@@ -349,11 +349,11 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="col-span-1 bg-card border-border border-2 rounded-[40px] overflow-hidden">
-          <CardHeader className="p-8 pb-4">
-            <CardTitle className="text-lg font-black uppercase tracking-tighter italic">Membership Growth</CardTitle>
+        <Card className="col-span-1 bg-card border-border border-2 rounded-[30px] md:rounded-[40px] overflow-hidden">
+          <CardHeader className="p-5 md:p-8 pb-2">
+            <CardTitle className="text-base md:text-lg font-black uppercase tracking-tighter italic">Membership Growth</CardTitle>
           </CardHeader>
-          <CardContent className="px-2 sm:p-6 h-[250px]">
+          <CardContent className="p-4 md:p-6 h-[250px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
