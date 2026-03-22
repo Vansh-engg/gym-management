@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scratch scripts
+check_db.ts
+check_profiles.ts
+db_output.txt
+
+# ai context
+.gemini/
