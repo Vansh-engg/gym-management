@@ -29,8 +29,12 @@ export function MobileNav({ className, ...props }: MobileNavProps) {
   }, []);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push('/login');
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error signing out:", error.message);
+    }
+    // Hard redirect to clear all client-side state
+    window.location.href = "/login";
   };
 
   const allLinks = [
