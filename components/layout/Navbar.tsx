@@ -77,7 +77,8 @@ export function Navbar() {
         </Button>
         
         <DropdownMenu>
-          <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="rounded-full border-2 border-primary/20 p-0 overflow-hidden hover:border-primary/50 transition-all" />}>
+          <DropdownMenuTrigger render={
+            <Button variant="ghost" size="icon" className="rounded-full border-2 border-primary/20 p-0 overflow-hidden hover:border-primary/50 transition-all h-10 w-10">
               {user?.user_metadata?.avatar_url ? (
                 <img 
                   src={user.user_metadata.avatar_url} 
@@ -87,14 +88,16 @@ export function Navbar() {
               ) : (
                 <UserCircle className="h-6 w-6 text-primary" />
               )}
+            </Button>
+          }>
               <span className="sr-only">Toggle user menu</span>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-64 border-border bg-card shadow-2xl rounded-2xl p-2">
+          <DropdownMenuContent align="end" className="w-64 border-border bg-card shadow-2xl rounded-2xl p-2 mt-2">
             <DropdownMenuLabel className="p-4">
               <div className="flex flex-col space-y-2">
                 <div className="flex items-center justify-between gap-2">
-                   <p className="text-sm font-black uppercase tracking-tighter text-foreground italic">
-                     {profile?.full_name || user?.user_metadata?.full_name || "New Athlete"}
+                   <p className="text-sm font-black uppercase tracking-tighter text-foreground italic truncate max-w-[140px]">
+                     {profile?.full_name || user?.user_metadata?.full_name || (user?.email === 'admin@rkfitness.com' ? 'Admin Chief' : user?.email?.split('@')[0]) || "Athlete"}
                    </p>
                    {profile?.role && (
                      <div className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[8px] font-black uppercase tracking-[0.2em] border border-primary/20 shrink-0">
