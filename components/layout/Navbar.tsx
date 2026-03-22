@@ -129,7 +129,7 @@ export function Navbar() {
             <DropdownMenuSeparator className="bg-border opacity-50" />
             <DropdownMenuItem 
               className="text-destructive focus:bg-destructive/10 cursor-pointer rounded-xl py-3 font-black text-xs uppercase tracking-[0.2em] italic" 
-              onClick={handleLogout}
+              onClick={handleSignOut}
             >
               <LogOut className="mr-3 h-4 w-4" />
               Terminate Session
